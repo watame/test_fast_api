@@ -1,0 +1,13 @@
+version: '3' # Docker Compose バージョンに対応するファイルバージョンを指定
+services:
+  app:
+    build:
+      context: . # ビルドの起点となるパスとしてカレントディレクトリを指定
+      dockerfile: Dockerfile
+    container_name: fastApi
+    working_dir: /fastApi
+    ports:
+      - '8000:8000' # localhost の 8000 ポートでアクセスできるようにする
+    volumes:
+      - .:/fastApi
+    command: ['uvicorn', 'main:app', '--host', '0.0.0.0', '--reload']
