@@ -1,4 +1,5 @@
-version: '3' # Docker Compose バージョンに対応するファイルバージョンを指定
+# Docker Compose バージョンに対応するファイルバージョンを指定
+version: '3'
 services:
   app:
     build:
@@ -13,5 +14,12 @@ services:
       # localhost の 8000 ポートでアクセスできるようにする
       - '8000:8000'
     volumes:
+      # メインプログラムファイルをコンテナにマウント
       - .:/fastApi
+      # pip install先をマウントして、インストール時間の短縮を図る
+      - ${PIP_CACHE_DIR:-pip}:/usr/local/lib/python3.10/site-packages
     command: ['uvicorn', 'main:app', '--host', '0.0.0.0', '--reload']
+
+volumes:
+  # pipパッケージをキャッシュするボリューム
+  pip:
