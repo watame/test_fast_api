@@ -5,10 +5,10 @@ ENV LANG=ja_JP.UTF-8 \
     LC_CTYPE=ja_JP.UTF-8 \
     TZ=Asia/Tokyo
 
-# パッケージのアップデート
+# パッケージのアップデートと不要なパッケージの削除
 RUN apt-get update && \
-    apt-get -y install locales && \
-    localedef -f UTF-8 -i ja_JP ja_JP.UTF-8
+    apt-get clean all && \
+    rm -rf /var/cache/apt
 
 # fastApiのインストール
 RUN pip install fastapi && \
