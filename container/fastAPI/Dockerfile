@@ -1,5 +1,8 @@
 FROM python:3.10
 
+# DockerのWorkdirを引数として取得
+ARG SOURCE_DIR
+
 # 環境変数の設定
 ENV LANG=ja_JP.UTF-8 \
     LC_CTYPE=ja_JP.UTF-8 \
@@ -13,3 +16,6 @@ RUN apt-get update && \
 # fastApiのインストール
 RUN pip install fastapi && \
     pip install uvicorn[standard]
+
+# 作業ディレクトリを設定
+WORKDIR ${SOURCE_DIR}

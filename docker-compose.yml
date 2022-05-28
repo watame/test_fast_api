@@ -5,8 +5,10 @@ services:
       # ビルドの起点となるパスとしてカレントディレクトリを指定
       context: .
       dockerfile: container/fastAPI/Dockerfile
+      # Dockerfileの引数としてWORKDIRのパスを作成
+      args:
+        SOURCE_DIR: /fastApi
     container_name: fastApi
-    working_dir: /fastApi
     ports:
       # localhost の 8000 ポートでアクセスできるようにする
       - '8000:8000'
