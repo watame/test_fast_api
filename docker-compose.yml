@@ -16,14 +16,10 @@ services:
     volumes:
       # メインプログラムファイルをコンテナにマウント
       - .:/fastApi
-      # pip install先をマウントして、インストール時間の短縮を図る
-      - ${PIP_CACHE_DIR:-pip}:/usr/local/lib/python3.10/site-packages
       # .venv先をマウントして、インストール時間の短縮を図る
       - ${VENV_CACHE_DIR:-venv}:/fastApi/.venv
     command: ['poetry', 'run', 'uvicorn', 'api.main:app', '--host', '0.0.0.0', '--reload']
 
 volumes:
-  # pipパッケージをキャッシュするボリューム
-  pip:
   # poetryのvenvをキャッシュするボリューム
   venv:

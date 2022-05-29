@@ -14,6 +14,9 @@ RUN apt-get update && \
     apt-get clean all && \
     rm -rf /var/cache/apt
 
+# poetryの導入
+RUN pip install poetry
+
 # 起動時に実施する処理を定義したntrypoint.shをコピーして実行
 COPY container/fastAPI/entrypoint.sh /usr/bin/
 # 実行権限を付与
