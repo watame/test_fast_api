@@ -1,11 +1,12 @@
 from fastapi import FastAPI
-from api.routers import task
+from api.routers import task, done
 
 # uvicornを通じて参照されるインスタンス
 app = FastAPI()
 
-# 定義したルーティング定義を読み込む
+# 定義したルーティング定義を読み込み、エンドポイントを追加する
 app.include_router(task.router)
+app.include_router(done.router)
 
 @app.get("/")
 def read_root():
