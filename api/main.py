@@ -1,11 +1,12 @@
 from fastapi import FastAPI
+from api.routers import task
 
 # uvicornを通じて参照されるインスタンス
 app = FastAPI()
 
-# @で始まるデコレーターで関数に対してパスオペレーションの処理を追加する
-# @app.operation(path) の形式で定義する
-# -> @app.get("/") はルートのGET処理、という意味
+# 定義したルーティング定義を読み込む
+app.include_router(task.router)
+
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
