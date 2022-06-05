@@ -1,7 +1,11 @@
 from typing import List
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from sqlalchemy.ext.asyncio import AsyncSession
 
 import api.schemas.task as task_schema
+# ルーターはMVCのCの部分、肥大化しやすいのでCRUDモジュールとして切り出す
+import api.cruds.task as task_crud
+from api.db import get_db
 
 router = APIRouter()
 
@@ -20,18 +24,17 @@ async def list_tasks():
 
 # response_modelにレスポンスとして戻したい値の定義を設定
 @router.post('/tasks', response_model=task_schema.TaskCreateResponse)
-async def create_task(task_body: task_schema.TaskCreate):
+async def create_task(task_body: task_schema.TaskCreate, db: AsyncSession = Depends(get_db)):
     """
     新たなTODOタスクを作成する
 
     Args:
         task_body:
             task_schema.TaskCreateのインスタンス
+        db:
+            DB接続先を決める関数（Dependency Injection、依存性注入）
     """
-    return task_schema.TaskCreateResponse(id=1, **task_body.dict())
-    # dictインスタンスに対して先頭に**を付けることでdictをキーワード引数として展開できる
-    # つまり、以下の挙動と同義になる
-    # -> return task_schema.TaskCreateResponse(id=1, title=task_body.title, done=task_body.done)
+    return await task_crud.create_task(db, task_body)
 
 
 @router.put('/tasks/{task_id}', response_model=task_schema.TaskCreateResponse)
