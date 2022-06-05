@@ -4,6 +4,7 @@ from sqlalchemy.engine.url import URL
 from api.models.task import Base
 
 DB_URL = URL.create(
+    # 同期読み書きをpython経由で行うためpymysqlアダプターを指定
     drivername='mysql+pymysql',
     username='root',
     host='db',
@@ -15,6 +16,9 @@ DB_URL = URL.create(
 engine = create_engine(DB_URL, echo=True)
 
 def reset_database():
+    """
+    DBテーブルの初期化（Drop and Migrate）
+    """
     Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
 
