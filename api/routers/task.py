@@ -1,3 +1,4 @@
+from http.client import HTTPException
 from typing import List
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -34,19 +35,42 @@ async def create_task(task_body: task_schema.TaskCreate, db: AsyncSession = Depe
     """
     return await task_crud.create_task(db, task_body)
 
+@router.get('/tasks/{task_id}', response_model=task_schema.TaskCreateResponse)
+async def get_task(task_id: int, db: AsyncSession = Depends(get_db)):
+    """
+    IDが合致する既存のTODOタスクを取得する
+
+    Args:
+        task_id:
+            URIに含まれるTaskインスタンスのID
+        db:
+            DB接続先を決める関数（Dependency Injection、依存性注入）
+    """
+    task = await task_crud.get_task(db, task_id=task_id)
+    if task is None:
+        raise HTTPException(status_code=404, detail='Task not found')
+
+    return task
 
 @router.put('/tasks/{task_id}', response_model=task_schema.TaskCreateResponse)
-async def update_task(task_id: int, task_body: task_schema.TaskCreate):
+async def update_task(task_id: int, task_body: task_schema.TaskCreate, db: AsyncSession = Depends(get_db)):
     """
     IDが合致する既存のTODOタスクを更新する
 
     Args:
         task_id:
-            URIに含まれるタスクインスタンスのID
+            URIに含まれるTaskインスタンスのID
         task_body:
             task_schema.TaskCreateのインスタンス
+        db:
+            DB接続先を決める関数（Dependency Injection、依存性注入）
     """
-    return task_schema.TaskCreateResponse(id=task_id, **task_body.dict())
+    # task_id に合致するTaskインスタンスを取得
+    task = await task_crud.get_task(db, task_id=task_id)
+    if task is None:
+        raise HTTPException(status_code=404, detail='Task not found')
+
+    return await task_crud.update_task(db, task_body, task)
 
 @router.delete('/tasks/{task_id}', response_model=None)
 async def delete_task(task_id: int):
