@@ -13,7 +13,7 @@ class Task(Base):
     id = Column(BigInteger, primary_key=True)
     title = Column(String(1024))
 
-    # Doneテーブル間の関係性を定義し、doneとしてアクセスできるようにする
+    # Doneテーブル間の関係性を定義し、Doneとしてアクセスできるようにする
     # -> relationship(テーブル名', back_populates=別のテーブルからアクセスされる名前)
     done = relationship('Done', back_populates='task')
 
@@ -24,6 +24,6 @@ class Done(Base):
     __tablename__ = 'dones'
 
     id = Column(BigInteger, ForeignKey('tasks.id'), primary_key=True)
-    # Taskテーブル間の関係性を定義し、taskとしてアクセスできるようにする
+    # Taskテーブル間の関係性を定義し、Taskとしてアクセスできるようにする
     # -> relationship(テーブル名', back_populates=別のテーブルからアクセスされる名前)
     task = relationship('Task', back_populates='done')

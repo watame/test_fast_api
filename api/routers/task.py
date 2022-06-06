@@ -14,13 +14,11 @@ router = APIRouter()
 # -> @app.get('/task') は/taskのパスへGETでアクセスするという意味
 # -> @app.get('/task', response_model=List[task_schema.Task]) のように設定し、Taskをリストに詰め込んで戻すことを明示している
 @router.get('/tasks', response_model=List[task_schema.Task])
-async def list_tasks():
+async def list_tasks(db: AsyncSession = Depends(get_db)):
     """
     TODOタスクの一覧を取得する
     """
-    # とりあえずはダミーの値を常に戻すようにする
-    # デフォルト値が入っているdoneは指定しなくてもOK
-    return [task_schema.Task(id=1, title='1つ目のTODOタスク')]
+    return await task_crud.get_tasks_with_done(db)
 
 # response_modelにレスポンスとして戻したい値の定義を設定
 @router.post('/tasks', response_model=task_schema.TaskCreateResponse)
