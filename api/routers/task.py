@@ -1,6 +1,5 @@
-from http.client import HTTPException
 from typing import List
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 import api.schemas.task as task_schema
