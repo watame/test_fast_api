@@ -102,3 +102,18 @@ async def update_task(db: AsyncSession, task_create: task_schema.TaskCreate, ori
     # 非同期処理でoriginalの情報をDBに登録した値に更新
     await db.refresh(original)
     return original
+
+async def delete_task(db: AsyncSession, original: task_model.Task) -> None:
+    """
+    登録したTODOタスクの内IDに合致するデータを削除する
+
+    Args:
+        db:
+            非同期DBセッションインスタンス
+        original:
+            task_model.Taskのインスタンス
+    Return:
+        None
+    """
+    await db.delete(original)
+    await db.commit()

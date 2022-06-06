@@ -73,13 +73,18 @@ async def update_task(task_id: int, task_body: task_schema.TaskCreate, db: Async
     return await task_crud.update_task(db, task_body, task)
 
 @router.delete('/tasks/{task_id}', response_model=None)
-async def delete_task(task_id: int):
+async def delete_task(task_id: int, db: AsyncSession = Depends(get_db)):
     """
     IDが合致する既存のTODOタスクを削除する
 
     Args:
         task_id:
-            URIに含まれるタスクインスタンスのID
+            URIに含まれるTaskインスタンスのID
+        db:
+            DB接続先を決める関数（Dependency Injection、依存性注入）
     """
-    # 現状、削除するものがないのでReturnするだけ
-    return
+    task = await task_crud.get_task(db, task_id)
+    if task is None:
+        raise HTTPException(status_code=404, detail='Task not found')
+
+    return await task_crud.delete_task(db, task)
