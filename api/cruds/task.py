@@ -7,9 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 import api.models.task as task_model
 import api.schemas.task as task_schema
 
-async def create_task(
-    db: AsyncSession, task_create: task_schema.TaskCreate
-    ) -> task_model.Task:
+async def create_task(db: AsyncSession, task_create: task_schema.TaskCreate) -> task_model.Task:
     """
     新たなTODOタスクをDBに登録する
 
