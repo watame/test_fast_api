@@ -105,7 +105,7 @@ async def update_task(db: AsyncSession, task_create: task_schema.TaskCreate, ori
 
 async def delete_task(db: AsyncSession, original: task_model.Task) -> None:
     """
-    登録したTODOタスクの内IDに合致するデータを削除する
+    引数のTaskインスタンスに合致するデータを削除する
 
     Args:
         db:
