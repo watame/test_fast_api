@@ -18,6 +18,8 @@ services:
       - .:/fastApi
       # .venv先をマウントして、インストール時間の短縮を図る
       - ${VENV_CACHE_DIR:-venv}:/fastApi/.venv
+    depends_on:
+      - db
 
   db:
     image: mysql:8.0
