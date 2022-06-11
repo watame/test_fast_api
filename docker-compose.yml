@@ -22,14 +22,13 @@ services:
       - db
 
   db:
-    image: mysql:8.0
-    # M1Macでも動作するようにplatformにarmを利用しないようにする
-    platform: linux/x86_64
+    build:
+      # ビルドの起点となるパスとしてカレントディレクトリを指定
+      context: .
+      dockerfile: container/mysql/Dockerfile
     environment:
       # rootアカウントをパスワード無しで作成
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-      # demoというDBを初期DBとして作成
-      MYSQL_DATABASE: 'demo'
       # TimeZoneを日本時間に設定
       TZ: 'Asia/Tokyo'
     volumes:
@@ -38,7 +37,7 @@ services:
       # localhost の 3306 ポートでアクセスできるようにする
       - '3306:3306'
     # デフォルトの認証がsha2でパスワード認証が出来ないため、パスワード認証を行う設定に変更
-    command: --default-authentication-plugin=mysql_native_password
+    command: ['--default-authentication-plugin=mysql_native_password']
 
 volumes:
   # poetryのvenvをキャッシュするボリューム
