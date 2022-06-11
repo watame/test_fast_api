@@ -19,3 +19,9 @@ httpx = "^0.23.0"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+# 以下のエラーに対応するため `asyncio_mode` を設定
+# -> DeprecationWarning: The 'asyncio_mode' default value will change to 'strict' in future, please explicitly use 'asyncio_mode=strict' or 'asyncio_mode=auto' in pytest configuration file.
+# https://docs.pytest.org/en/latest/reference/customize.html
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
