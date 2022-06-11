@@ -11,7 +11,10 @@ ASYNC_DB_URL = URL.create(
     host='db',
     port='3306',
     database='demo',
-    query={'charset': 'utf8'}
+    # MySQLのUTF8は3バイトで、一般的なUTF8の4バイトとは異なる
+    # -> 'utf8mb4'を文字コードとして明示的に指定する
+    # https://dailyhackon.com/mysql-utf8mb4/
+    query={'charset': 'utf8mb4'}
 )
 
 # DB接続先を引数にDBインスタンスを作成
