@@ -5,7 +5,7 @@ services:
     build:
       # ビルドの起点となるパスとしてカレントディレクトリを指定
       context: .
-      dockerfile: container/fastAPI/Dockerfile
+      dockerfile: container/fastapi/Dockerfile
       # Dockerfileの引数としてWORKDIRのパスを作成
       args:
         SOURCE_DIR: /fastApi
