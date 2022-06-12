@@ -109,9 +109,9 @@ async def test_done_flag(async_client):
 """
 Exception ignored in: <function Connection.__del__ at 0x7fc9d0dbec20>
 Traceback (most recent call last):
-  File "/fastApi/.venv/lib/python3.10/site-packages/aiomysql/connection.py", line 1120, in __del__
+  File "/fastapi/.venv/lib/python3.10/site-packages/aiomysql/connection.py", line 1120, in __del__
     self.close()
-  File "/fastApi/.venv/lib/python3.10/site-packages/aiomysql/connection.py", line 339, in close
+  File "/fastapi/.venv/lib/python3.10/site-packages/aiomysql/connection.py", line 339, in close
     self._writer.transport.close()
   File "/usr/local/lib/python3.10/asyncio/selector_events.py", line 698, in close
     self._loop.call_soon(self._call_connection_lost, None)
