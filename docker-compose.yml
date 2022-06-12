@@ -8,16 +8,15 @@ services:
       dockerfile: container/fastapi/Dockerfile
       # Dockerfileの引数としてWORKDIRのパスを作成
       args:
-        SOURCE_DIR: /fastApi
-    container_name: fastApi
+        SOURCE_DIR: /fastapi
     ports:
       # localhost の 8000 ポートでアクセスできるようにする
       - '8000:8000'
     volumes:
       # メインプログラムファイルをコンテナにマウント
-      - .:/fastApi
+      - .:/fastapi
       # .venv先をマウントして、インストール時間の短縮を図る
-      - ${VENV_CACHE_DIR:-venv}:/fastApi/.venv
+      - ${VENV_CACHE_DIR:-venv}:/fastapi/.venv
     depends_on:
       - db
 
