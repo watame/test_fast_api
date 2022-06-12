@@ -8,15 +8,16 @@
 1. Dockerイメージの作成
     - `docker-compose build`
 2. Dockerイメージの起動
-    - `docker-compose build`
+    - `docker-compose up`
+    - **起動が完了するまで様子見する**
 3. DBマイグレーション
-    - `docker-compose exec app poetry run python -m api.migrate_db`
+    - `docker-compose run --rm app poetry run python -m api.migrate_db`
 
 # APIドキュメント
 - `localhost:8000/docs`
 
 # テスト
-- `docker-compose run --entrypoint "poetry run pytest" app`
+- `docker-compose run --rm app poetry run pytest`
 
 # 参考にするサイト
 - [FastAPI入門](https://zenn.dev/sh0nk/books/537bb028709ab9/viewer/f1b6fc)

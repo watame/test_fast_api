@@ -18,7 +18,7 @@ RUN apt-get update && \
 RUN pip install poetry
 
 # 起動時に実施する処理を定義したntrypoint.shをコピーして実行
-COPY container/fastapi/entrypoint.sh /usr/bin/
+COPY container/fastapi/entrypoint.sh /usr/bin/entrypoint.sh
 # 実行権限を付与
 RUN chmod +x /usr/bin/entrypoint.sh
 # エントリーポイントの処理を実行
