@@ -1,8 +1,20 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from api.routers import task, done
 
 # uvicornを通じて参照されるインスタンス
 app = FastAPI()
+
+origins = [
+    "http://localhost:3000"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # 定義したルーティング定義を読み込み、エンドポイントを追加する
 app.include_router(task.router)
